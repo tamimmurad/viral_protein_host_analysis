@@ -29,16 +29,16 @@ This is done by manually filtering the viral proteins in NCBI as follows: txid10
 NOTE:Downloaded on 31st of May 2023 for a total of 749600 viral proteins with a file name 'sequence.fasta.xml'.
 The below is the curating and extracting steps: 
 
-    \# Remove the lines with gnl sequence ids(to ease out the following steps):
+    # Remove the lines with gnl sequence ids(to ease out the following steps):
 	$cat sequence.fasta.xml | grep -v 'gnl|' > seqs_gnl_corrected.xml
 
-    \# Extract protein accns only with the following command and write to a tsv file:
+    # Extract protein accns only with the following command and write to a tsv file:
 	$cat seqs_gnl_corrected.xml | grep -B1  taxid |grep -v taxid|sed 's/<[^>]*>//g'| grep -v -|tr -d ' '|sed 's/pdb|//'|tr '|' '_' > accns_corrected.tsv  
 
-    \# Extract taxids corresponding to accessions with the following command:
+    # Extract taxids corresponding to accessions with the following command:
 	$cat seqs_gnl_corrected.xml| grep  taxid |sed 's/<[^>]*>//g'| grep -v - |tr -d ' ' > tax_corrected.tsv
 
-    \# concatenate both files horizontally. Two columns with one column for protein ACCN and the 2nd is for the tax id of its virus.
+    # concatenate both files horizontally. Two columns with one column for protein ACCN and the 2nd is for the tax id of its virus.
 	$paste accns_corrected.tsv tax_corrected.tsv  > accn_tax_corrected.tsv
 
 
@@ -68,6 +68,8 @@ With the script 'analyze_hetro_clusters.py', hetro clusters are analyzed and the
 ### 
 
 The script 'vp_interactions_plots.py' is used to produce summaries of the results above in plots (mainly histograms).
+
+
 ![Alt text](viral_entries_host_distribution.png "Title")
 ![Alt text](hetro_clus_interactions_hist.png "Title")
 ![Alt text](Host_Hetrogeniety_Hist.png "Title")
